@@ -12,28 +12,29 @@ const Navbar = () => {
   ];
 
   return (
-    <AppBar 
-      position="fixed" 
-      sx={{ 
-        backgroundColor: '#8888',
-        boxShadow: 'none',
-        padding: '10px 0'
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: '#9fb6c3', // Gray color
+        padding: '0 30px', // Add horizontal padding for a cleaner look
+        boxShadow: 'none', // Remove box shadow for a flat design
+        height: '80px', // Set consistent height for the navbar
+        justifyContent: 'center',
       }}
     >
-      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '100%' }}>
         
-        {/* Company Logo with Typography */}
+        {/* Company Logo */}
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <img
-            src="/logo.svg" // Correct path to your logo in the public folder
+            src="/logo.svg" // Replace with correct logo path
             alt="Company Logo"
-            style={{ width: '250px', height: '60px', marginRight: '10px' }}
+            style={{ width: '250px', height: '60px', marginRight: '20px' }} // Adjust logo size
           />
-
         </Box>
 
-        {/* Centered Navigation Links */}
-        <Box sx={{ display: 'flex', gap: '20px' }}>
+        {/* Navigation Links */}
+        <Box sx={{ display: 'flex', gap: '30px' }}>
           {navItems.map((item) => (
             <Button
               key={item.name}
@@ -42,32 +43,9 @@ const Navbar = () => {
                 color: '#fff',
                 fontSize: '16px',
                 fontWeight: 'bold',
-                textTransform: 'uppercase',
-                position: 'relative',
                 '&:hover': {
                   backgroundColor: 'transparent',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    width: '100%',
-                    height: '2px',
-                    bottom: '-5px',
-                    left: '0',
-                    backgroundColor: '#fff',
-                    transform: 'scaleX(1)',
-                    transition: 'transform 0.3s ease',
-                  },
-                },
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  width: '100%',
-                  height: '2px',
-                  bottom: '-5px',
-                  left: '0',
-                  backgroundColor: '#fff',
-                  transform: 'scaleX(0)',
-                  transition: 'transform 0.3s ease',
+                  borderBottom: '2px solid #fff', // Underline on hover
                 },
               }}
             >

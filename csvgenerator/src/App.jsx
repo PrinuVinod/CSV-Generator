@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import InputForm from './Components/mainPage/InputForm';
 import CsvGenerator from './Components/mainPage/CsvGenerator';
-import HomePage from './Components/HomePage/HomePage';
+import HomePage from './Components/Homepage/HomePage';
 import Navbar from './Components/Navbar/Navbar';
 
 const App = () => {

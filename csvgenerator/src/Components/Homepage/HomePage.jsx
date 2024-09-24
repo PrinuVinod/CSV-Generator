@@ -19,7 +19,7 @@ const HomePage = () => {
         left: 0,
         width: '100vw',      // Full width of the viewport
         height: '100vh',     // Full height of the viewport
-        backgroundColor: '	#7b7b7b',  // Background gradient
+        backgroundColor: '	#ffff',  // Background gradient
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
@@ -54,7 +54,7 @@ const HomePage = () => {
                 textTransform: 'uppercase',
               }}
             >
-              1st CSV Generator
+              CSV Generator
             </Typography>
             <Typography variant="body1" sx={{ mb: 2 }}>
               Click to generate your CSV files instantly.

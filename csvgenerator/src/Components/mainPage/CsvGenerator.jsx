@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
-import { Button, Box } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import { toWords } from 'number-to-words'; // Import the library
 
 const CsvGenerator = ({ formData }) => {
+  const [isFormValid, setIsFormValid] = useState(true);
   const {
     lowerLimit,
     upperLimit,
@@ -16,7 +17,42 @@ const CsvGenerator = ({ formData }) => {
     scope,
   } = formData;
 
+  // Function to check if all required fields are filled
+  useEffect(() => {
+    const validateForm = () => {
+      if (
+        !lowerLimit ||
+        !upperLimit ||
+        !DomainName ||
+        !areaCode ||
+        !calleridNumber ||
+        !calleridName ||
+        !callerid911 ||
+        !timezone ||
+        !scope
+      ) {
+        setIsFormValid(false);
+      } else {
+        setIsFormValid(true);
+      }
+    };
+
+    validateForm();
+  }, [
+    lowerLimit,
+    upperLimit,
+    DomainName,
+    areaCode,
+    calleridNumber,
+    calleridName,
+    callerid911,
+    timezone,
+    scope,
+  ]);
+
   const generateCsvData = () => {
+    if (!isFormValid) return;
+
     const data = [];
 
     for (let i = parseInt(lowerLimit); i <= parseInt(upperLimit); i++) {
@@ -74,18 +110,28 @@ const CsvGenerator = ({ formData }) => {
 
   return (
     <Box sx={{ textAlign: 'center', mt: 4 }}>
+      {!isFormValid && (
+        <Typography color="error" sx={{ mb: 2 }}>
+          Please fill in all required fields to download the CSV file.
+        </Typography>
+      )}
       <Button 
         variant="contained" 
         color="primary" 
         onClick={generateCsvData}
+        disabled={!isFormValid} // Disable the button if form is not valid
         sx={{
           fontSize: '16px',
           padding: '10px 20px',
           backgroundColor: '#0c6934',
           '&:hover': {
             backgroundColor: 'white',
-            color:'#0c6934',
-            border:'1px solid #0c6934'
+            color: '#0c6934',
+            border: '1px solid #0c6934',
+          },
+          '&:disabled': {
+            backgroundColor: '#d3d3d3', // Gray color when disabled
+            color: '#a0a0a0',
           },
         }}
       >

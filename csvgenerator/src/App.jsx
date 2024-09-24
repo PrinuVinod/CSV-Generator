@@ -4,12 +4,13 @@ import InputForm from './Components/mainPage/InputForm';
 import CsvGenerator from './Components/mainPage/CsvGenerator';
 import HomePage from './Components/Homepage/HomePage';
 import Navbar from './Components/Navbar/Navbar';
+import { Box } from '@mui/material';
 
 const App = () => {
   const [formData, setFormData] = useState(null);
 
-  const handleGenerateCsv = (data) => {
-    setFormData(data);
+  const handleGenerateCsv = (formData) => {
+    setFormData(formData);
   };
 
   return (
@@ -20,12 +21,11 @@ const App = () => {
         <Route
           path="/csv-generator"
           element={
-            <div>
-              <h1>CSV Generator</h1>
+            <Box sx={{ p: 4 }}>
               <InputForm onGenerateCsv={handleGenerateCsv} />
-              {/* Pass the full formData to CsvGenerator */}
+              {/* Show the CsvGenerator button only if formData exists */}
               {formData && <CsvGenerator formData={formData} />}
-            </div>
+            </Box>
           }
         />
         <Route path="/home2" element={<div>Home2 Content</div>} />

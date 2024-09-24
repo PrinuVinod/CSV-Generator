@@ -1,6 +1,7 @@
 import React from 'react';
 import Papa from 'papaparse';
 import { Button, Box } from '@mui/material';
+import { toWords } from 'number-to-words'; // Import the library
 
 const CsvGenerator = ({ formData }) => {
   const {
@@ -19,11 +20,22 @@ const CsvGenerator = ({ formData }) => {
     const data = [];
 
     for (let i = parseInt(lowerLimit); i <= parseInt(upperLimit); i++) {
+      // Get the thousands part for the "first name" (e.g., 10 from 10006)
+      const firstName = toWords(Math.floor(i / 1000)); // Convert the thousands part to words
+      
+      // Get the remaining part after the thousands (e.g., 6 from 10006)
+      const remainder = i % 1000;
+      let lastName = "thousand";
+      
+      if (remainder > 0) {
+        lastName += ` ${toWords(remainder)}`; // Add the remainder in words
+      }
+
       data.push({
         extension: i,
         domain: DomainName,
-        "first name": String(i).charAt(0),
-        "last name": String(i).slice(1),
+        "first name": firstName,
+        "last name": lastName.trim(), // Trim to avoid extra spaces
         login: `${i}@bvtest.com`,
         "portal password": null,
         "email address": "noreply@noreply.com",
@@ -37,7 +49,7 @@ const CsvGenerator = ({ formData }) => {
         "callerid number": `\t${calleridNumber}`,
         "callerid name": calleridName,
         "911 callerid": `\t${callerid911}`,
-        "dial plan": "bvtest.com",
+        "dial plan": DomainName,
         "dial permission": "US and Canada",
         "audio directory": "yes",
         "visual directory": "yes",
@@ -56,7 +68,7 @@ const CsvGenerator = ({ formData }) => {
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `data-${formData.lowerLimit}-${formData.upperLimit}.csv`;
+    link.download = `${DomainName}.csv`;
     link.click();
   };
 
@@ -69,9 +81,11 @@ const CsvGenerator = ({ formData }) => {
         sx={{
           fontSize: '16px',
           padding: '10px 20px',
-          backgroundColor: '#1976d2',
+          backgroundColor: '#0c6934',
           '&:hover': {
-            backgroundColor: '#115293',
+            backgroundColor: 'white',
+            color:'#0c6934',
+            border:'1px solid #0c6934'
           },
         }}
       >

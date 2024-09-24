@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import InputForm from './Components/mainPage/InputForm';
 import CsvGenerator from './Components/mainPage/CsvGenerator';
 import HomePage from './Components/Homepage/HomePage';
+import Navbar from './Components/Navbar/Navbar';
 
 const App = () => {
   const [limits, setLimits] = useState({ lower: null, upper: null });
@@ -13,6 +14,7 @@ const App = () => {
 
   return (
     <Router>
+      <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route 
@@ -28,6 +30,9 @@ const App = () => {
             </div>
           } 
         />
+        {/* Add routes for Home2 and Home3 */}
+        <Route path="/home2" element={<div>Home2 Content</div>} />
+        <Route path="/home3" element={<div>Home3 Content</div>} />
       </Routes>
     </Router>
   );

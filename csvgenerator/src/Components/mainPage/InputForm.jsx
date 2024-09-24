@@ -4,6 +4,7 @@ import { TextField, Button, Grid, Box, FormControl, InputLabel, Select, MenuItem
 const InputForm = ({ onGenerateCsv }) => {
   const [lowerLimit, setLowerLimit] = useState('');
   const [upperLimit, setUpperLimit] = useState('');
+  const [DomainName, setDomainName] = useState('');
   const [areaCode, setAreaCode] = useState('');
   const [calleridNumber, setCalleridNumber] = useState('');
   const [calleridName, setCalleridName] = useState('');
@@ -17,6 +18,7 @@ const InputForm = ({ onGenerateCsv }) => {
     const formData = {
       lowerLimit,
       upperLimit,
+      DomainName,
       areaCode,
       calleridNumber,
       calleridName,
@@ -53,6 +55,16 @@ const InputForm = ({ onGenerateCsv }) => {
             fullWidth
             value={upperLimit}
             onChange={(e) => setUpperLimit(e.target.value)}
+            variant="outlined"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            label="Domain Name"
+            type="text"
+            fullWidth
+            value={DomainName}
+            onChange={(e) => setDomainName(e.target.value)}
             variant="outlined"
           />
         </Grid>

@@ -6,6 +6,7 @@ const CsvGenerator = ({ formData }) => {
   const {
     lowerLimit,
     upperLimit,
+    DomainName,
     areaCode,
     calleridNumber,
     calleridName,
@@ -20,7 +21,7 @@ const CsvGenerator = ({ formData }) => {
     for (let i = parseInt(lowerLimit); i <= parseInt(upperLimit); i++) {
       data.push({
         extension: i,
-        domain: 'bvtest.com',
+        domain: DomainName,
         "first name": String(i).charAt(0),
         "last name": String(i).slice(1),
         login: `${i}@bvtest.com`,

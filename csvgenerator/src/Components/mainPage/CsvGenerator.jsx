@@ -155,7 +155,7 @@ const CsvGenerator = ({ formData }) => {
     }
 
     const csv = Papa.unparse(data);
-    downloadCsv(csv, `${DomainName}-secondary.csv`);
+    downloadCsv(csv, `${DomainName}-Device.csv`);
   };
 
   const downloadCsv = (csv, fileName) => {
@@ -193,7 +193,7 @@ const CsvGenerator = ({ formData }) => {
           },
         }}
       >
-        Download Primary CSV
+        Download for User
       </Button>
 
       <Button 
@@ -205,11 +205,11 @@ const CsvGenerator = ({ formData }) => {
           fontSize: '16px',
           padding: '10px 20px',
           marginLeft: '20px',
-          backgroundColor: '#69340c',
+          backgroundColor: '#8c2eeb',
           '&:hover': {
             backgroundColor: 'white',
             color: '#69340c',
-            border: '1px solid #69340c',
+            border: '1px solid #8c2eeb',
           },
           '&:disabled': {
             backgroundColor: '#d3d3d3', // Gray color when disabled
@@ -217,7 +217,7 @@ const CsvGenerator = ({ formData }) => {
           },
         }}
       >
-        Download Secondary CSV
+        Download for Device
       </Button>
     </Box>
   );

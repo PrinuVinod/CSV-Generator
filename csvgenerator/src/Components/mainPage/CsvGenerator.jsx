@@ -50,6 +50,16 @@ const CsvGenerator = ({ formData }) => {
     scope,
   ]);
 
+  // Function to generate a random alphanumeric key
+  const generateRandomKey = (length = 16) => {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  };
+
   const generateCsvData = () => {
     if (!isFormValid) return;
 
@@ -97,14 +107,62 @@ const CsvGenerator = ({ formData }) => {
     }
 
     const csv = Papa.unparse(data);
-    downloadCsv(csv);
+    downloadCsv(csv, `${DomainName}-primary.csv`);
   };
 
-  const downloadCsv = (csv) => {
+  // New function to generate second CSV file based on the image data
+  const generateSecondaryCsvData = () => {
+    if (!isFormValid) return;
+
+    const data = [];
+
+    for (let i = parseInt(lowerLimit); i <= parseInt(upperLimit); i++) {
+      data.push({
+        aor: `sip:${i}@${DomainName}`,
+        termination_match:  `sip:${i}@${DomainName}`,
+        from_address: null,
+        hostname: null,
+        received_from: null,
+        user_agent: null,
+        accept_agent: null,
+        term_scheme: "sip:",
+        term_user: null,
+        contact: null,
+        transport: null,
+        nat_wan: "automatic",
+        expires: "60",
+        registration_time: null,
+        registration_expires_time: null,
+        registratin_required: "yes",
+        origination_allowed: "yes",
+        termination_allowed: "yes",
+        authenticate_register: "yes",
+        authenticate_invite: "yes",
+        authenticate_alg: "md5",
+        authentication_realm: `${DomainName}`,
+        authentication_key: generateRandomKey(), // Call the function to generate a random key for each row
+
+        subscriber_name: `${i}`,
+        subscriber_domain: `${DomainName}`,
+        call_progressing_rule: null,
+        callid_ergr: "[*]",
+        auto_ans: "no",
+        watch: "no",
+        date_created: new Date().toISOString(),
+        srv_code: null,
+        address_id: null,
+      });
+    }
+
+    const csv = Papa.unparse(data);
+    downloadCsv(csv, `${DomainName}-secondary.csv`);
+  };
+
+  const downloadCsv = (csv, fileName) => {
     const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = `${DomainName}.csv`;
+    link.download = fileName;
     link.click();
   };
 
@@ -135,7 +193,31 @@ const CsvGenerator = ({ formData }) => {
           },
         }}
       >
-        Download CSV
+        Download Primary CSV
+      </Button>
+
+      <Button 
+        variant="contained" 
+        color="secondary" 
+        onClick={generateSecondaryCsvData}
+        disabled={!isFormValid} // Disable the button if form is not valid
+        sx={{
+          fontSize: '16px',
+          padding: '10px 20px',
+          marginLeft: '20px',
+          backgroundColor: '#69340c',
+          '&:hover': {
+            backgroundColor: 'white',
+            color: '#69340c',
+            border: '1px solid #69340c',
+          },
+          '&:disabled': {
+            backgroundColor: '#d3d3d3', // Gray color when disabled
+            color: '#a0a0a0',
+          },
+        }}
+      >
+        Download Secondary CSV
       </Button>
     </Box>
   );

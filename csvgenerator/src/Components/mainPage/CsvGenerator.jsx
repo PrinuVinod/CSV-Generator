@@ -60,28 +60,46 @@ const CsvGenerator = ({ formData }) => {
     return result;
   };
 
+  // Function to generate first name and last name based on the number's digit length
+  const getFirstAndLastName = (num) => {
+    const numInWords = toWords(num); // Convert the entire number to words
+    const numStr = num.toString(); // Convert the number to string to analyze its length
+
+    let firstName = '';
+    let lastName = '';
+
+    if (numStr.length === 1) {
+      firstName = toWords(num); // Single digit number, full word as first name
+      lastName = null; // No last name for single digit numbers
+    } else if (numStr.length === 2) {
+      firstName = toWords(Number(numStr.charAt(0))); // First digit as first name
+      lastName = toWords(Number(numStr.charAt(1))); // Second digit as last name
+    } else if (numStr.length === 3) {
+      firstName = toWords(Number(numStr.charAt(0))); // Hundreds part as first name
+      lastName = `${toWords(Number(numStr.substring(1)))}`; // Remaining part as last name
+    } else if (numStr.length >= 4) {
+      const firstPart = Math.floor(num / 1000); // Thousands part
+      const lastPart = num % 1000; // Remaining part after thousands
+      firstName = toWords(firstPart);
+      lastName = lastPart > 0 ? toWords(lastPart) : ''; // Convert the last part to words, if it exists
+    }
+
+    return { firstName, lastName: lastName || null }; // Ensure last name is null if empty
+  };
+
   const generateCsvData = () => {
     if (!isFormValid) return;
 
     const data = [];
 
     for (let i = parseInt(lowerLimit); i <= parseInt(upperLimit); i++) {
-      // Get the thousands part for the "first name" (e.g., 10 from 10006)
-      const firstName = toWords(Math.floor(i / 1000)); // Convert the thousands part to words
+      const { firstName, lastName } = getFirstAndLastName(i); // Get first and last name
       
-      // Get the remaining part after the thousands (e.g., 6 from 10006)
-      const remainder = i % 1000;
-      let lastName = "thousand";
-      
-      if (remainder > 0) {
-        lastName += ` ${toWords(remainder)}`; // Add the remainder in words
-      }
-
       data.push({
         extension: i,
         domain: DomainName,
         "first name": firstName,
-        "last name": lastName.trim(), // Trim to avoid extra spaces
+        "last name": lastName, // Assign the generated last name
         login: `${i}@bvtest.com`,
         "portal password": null,
         "email address": "noreply@noreply.com",
@@ -107,10 +125,9 @@ const CsvGenerator = ({ formData }) => {
     }
 
     const csv = Papa.unparse(data);
-    downloadCsv(csv, `${DomainName}-primary.csv`);
+    downloadCsv(csv, `${DomainName}.csv`);
   };
 
-  // New function to generate second CSV file based on the image data
   const generateSecondaryCsvData = () => {
     if (!isFormValid) return;
 

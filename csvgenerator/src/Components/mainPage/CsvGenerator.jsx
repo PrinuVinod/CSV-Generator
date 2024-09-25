@@ -126,7 +126,7 @@ const CsvGenerator = ({ formData }) => {
         user_agent: null,
         accept_agent: null,
         term_scheme: "sip:",
-        term_user: null,
+        term_user_trans: null,
         contact: null,
         transport: null,
         nat_wan: "automatic",
@@ -141,11 +141,10 @@ const CsvGenerator = ({ formData }) => {
         authenticate_alg: "md5",
         authentication_realm: `${DomainName}`,
         authentication_key: generateRandomKey(), // Call the function to generate a random key for each row
-
         subscriber_name: `${i}`,
         subscriber_domain: `${DomainName}`,
         call_progressing_rule: null,
-        callid_ergr: "[*]",
+        callid_emgr: "[*]",
         auto_ans: "no",
         watch: "no",
         date_created: new Date().toISOString(),

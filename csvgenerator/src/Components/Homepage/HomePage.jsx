@@ -107,7 +107,7 @@ const HomePage = () => {
         </Grid>
 
         {/* Another Generator Grid */}
-        <Grid 
+        {/* <Grid 
           item 
           xs={12}    
           sm={8}     
@@ -144,7 +144,7 @@ const HomePage = () => {
             </Typography>
             <ArrowForwardIosIcon sx={{ fontSize: '40px', color: '#fff' }} />
           </Paper>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Box>
   );

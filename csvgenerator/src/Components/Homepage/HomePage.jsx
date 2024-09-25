@@ -53,6 +53,7 @@ const HomePage = () => {
         justifyContent: 'center',
         alignItems: 'center',
         padding: '0 20px',
+        gap: '0px',
       }}
     >
       <Grid 
@@ -60,6 +61,7 @@ const HomePage = () => {
         justifyContent="center" 
         alignItems="center"
         spacing={3}  
+        sx={{gap:10}}
       >
         {/* CSV Generator Grid */}
         <Grid 
@@ -69,7 +71,7 @@ const HomePage = () => {
           md={6}     
           lg={4}     
           xl={3}
-          sx={{}}
+          sx={{boxShadow:'none'}}
      
         >
           <Paper 
@@ -77,11 +79,12 @@ const HomePage = () => {
             onClick={handleClickCsvGenerator} 
             sx={{
               ...paperStyle,
-              backgroundColor: '#1976d2',  
-              color:'white',
+              background: 'linear-gradient(90deg, rgba(8,148,255,1) 0%, rgba(146, 206, 244, 1) 100%)', // Green gradient applied here
+              color: 'white',
               '&:hover': {
                 transform: 'scale(1.05)',  
-                backgroundColor: '#115293',  
+                background: 'linear-gradient(50deg, rgba(91,148,255,1) 0%, rgba(186, 206, 244, 1) 100%)', // Hover background with same gradient
+              
               },
             }}
           >
@@ -97,7 +100,7 @@ const HomePage = () => {
               CSV Generator
             </Typography>
             <Typography variant="body1" sx={{ mb: 2 }}>
-              Click to generate your CSV files instantly.
+              Click to generate your CSV files for <b>Migration</b>.
             </Typography>
             <ArrowForwardIosIcon sx={{ fontSize: '40px', color: '#fff' }} />
           </Paper>
@@ -117,11 +120,11 @@ const HomePage = () => {
             onClick={handleClickAnotherGenerator} 
             sx={{
               ...paperStyle,
-              backgroundColor: '#4caf50',  
-              color:'white',
+              background: 'linear-gradient(40deg, rgba(255, 27, 107, 1) 0%, rgba(157, 119, 185, 1) 100%)', // Green gradient applied here
+              color: 'white',
               '&:hover': {
                 transform: 'scale(1.05)',  
-                backgroundColor: '#388e3c',  
+                background: 'linear-gradient(90deg, rgba(215, 27, 107, 1) 0%, rgba(127, 119, 185, 1) 100%)', // Hover background with same gradient
               },
             }}
           >
@@ -137,7 +140,7 @@ const HomePage = () => {
               Add Device
             </Typography>
             <Typography variant="body1" sx={{ mb: 2 }}>
-              Click to generate another type of file.
+              Click to add Devices <b>Instantly </b>
             </Typography>
             <ArrowForwardIosIcon sx={{ fontSize: '40px', color: '#fff' }} />
           </Paper>

@@ -216,7 +216,7 @@ const CsvGenerator = ({ formData }) => {
         variant="contained" 
         color="secondary" 
         onClick={generateSecondaryCsvData}
-        disabled={!isFormValid} // Disable the button if form is not valid
+        disabled={!isFormValid}
         sx={{
           fontSize: '16px',
           padding: '10px 20px',
@@ -228,7 +228,7 @@ const CsvGenerator = ({ formData }) => {
             border: '1px solid #8c2eeb',
           },
           '&:disabled': {
-            backgroundColor: '#d3d3d3', // Gray color when disabled
+            backgroundColor: '#d3d3d3', 
             color: '#a0a0a0',
           },
         }}

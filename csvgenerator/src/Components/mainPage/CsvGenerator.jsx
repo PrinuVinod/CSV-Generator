@@ -100,7 +100,7 @@ const CsvGenerator = ({ formData }) => {
         domain: DomainName,
         "first name": firstName,
         "last name": lastName, // Assign the generated last name
-        login: `${i}@bvtest.com`,
+        login: `${i}@${DomainName}`,
         "portal password": null,
         "email address": "noreply@noreply.com",
         "voicemail pin": null,

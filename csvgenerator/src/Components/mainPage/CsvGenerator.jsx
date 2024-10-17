@@ -14,6 +14,7 @@ const CsvGenerator = ({ formData }) => {
     calleridName,
     callerid911,
     timezone,
+    dial,
     scope,
   } = formData;
 
@@ -29,6 +30,7 @@ const CsvGenerator = ({ formData }) => {
         !calleridName ||
         !callerid911 ||
         !timezone ||
+        !dial ||
         !scope
       ) {
         setIsFormValid(false);
@@ -47,6 +49,7 @@ const CsvGenerator = ({ formData }) => {
     calleridName,
     callerid911,
     timezone,
+    dial,
     scope,
   ]);
 
@@ -114,7 +117,7 @@ const CsvGenerator = ({ formData }) => {
         "callerid name": calleridName,
         "911 callerid": `\t${callerid911}`,
         "dial plan": DomainName,
-        "dial permission": "US and Canada",
+        "dial permission": dial,
         "audio directory": "yes",
         "visual directory": "yes",
         vmail_transcribe: "deepgram",

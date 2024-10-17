@@ -10,6 +10,7 @@ const InputForm = ({ onGenerateCsv }) => {
   const [calleridName, setCalleridName] = useState('');
   const [callerid911, setCallerid911] = useState('');
   const [timezone, setTimezone] = useState('US/Central');
+  const [dial, setdial] = useState('g12domestic_Alaska');
   const [scope, setScope] = useState('Basic User');
 
   const handleSubmit = (e) => {
@@ -24,6 +25,7 @@ const InputForm = ({ onGenerateCsv }) => {
       calleridName,
       callerid911,
       timezone,
+      dial,
       scope,
     };
 
@@ -122,6 +124,36 @@ const InputForm = ({ onGenerateCsv }) => {
             </Select>
           </FormControl>
         </Grid>
+
+        <Grid item xs={12} sm={6}>
+          <FormControl fullWidth>
+            <InputLabel>Dial Permission</InputLabel>
+            <Select
+              value={dial}
+              label="dial permission"
+              onChange={(e) => setdial(e.target.value)}
+            >
+              <MenuItem value="Deny All">Deny All</MenuItem>
+              <MenuItem value="Internal Only">Internal Only</MenuItem>
+              <MenuItem value="International Light">International Light</MenuItem>
+              <MenuItem value="US CA DM and International Walnut">US CA DM and International Walnut</MenuItem>
+              <MenuItem value="Video Conference">Video Conference</MenuItem>
+              <MenuItem value="Permit All">Permit All</MenuItem>
+              <MenuItem value="EigerCreative">EigerCreative</MenuItem>
+              <MenuItem value="NewInternationalPermission">NewInternationalPermission</MenuItem>
+              <MenuItem value="OlympicAerospace">OlympicAerospace</MenuItem>
+              <MenuItem value="PFP.domestic">PFP.domestic</MenuItem>
+              <MenuItem value="beaconrx.international">beaconrx.international</MenuItem>
+              <MenuItem value="g12basic">g12basic</MenuItem>
+              <MenuItem value="g12domestic">g12domestic</MenuItem>
+              <MenuItem value="g12domestic_Alaska">g12domestic_Alaska</MenuItem>
+              <MenuItem value="verasonicsPermissionilsrael">verasonicsPermissionilsrael</MenuItem>
+              <MenuItem value="US and Canada">US and Canada</MenuItem>
+
+            </Select>
+          </FormControl>
+        </Grid>
+
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <InputLabel>Scope</InputLabel>

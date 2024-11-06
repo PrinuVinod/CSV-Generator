@@ -93,8 +93,8 @@ const CsvGenerator = ({ formData }) => {
     const upper = parseInt(upperLimit);
     const totalRecords = upper - lower + 1;
 
-    // Split the data into chunks of 10,000
-    const chunkSize = 10000;
+    // Set chunk size to 5000
+    const chunkSize = 5000;
     const numChunks = Math.ceil(totalRecords / chunkSize);
 
     for (let chunk = 0; chunk < numChunks; chunk++) {
@@ -146,8 +146,8 @@ const CsvGenerator = ({ formData }) => {
     const upper = parseInt(upperLimit);
     const totalRecords = upper - lower + 1;
 
-    // Split the data into chunks of 10,000
-    const chunkSize = 10000;
+    // Set chunk size to 5000
+    const chunkSize = 5000;
     const numChunks = Math.ceil(totalRecords / chunkSize);
 
     for (let chunk = 0; chunk < numChunks; chunk++) {

@@ -5,7 +5,7 @@ import { toWords } from 'number-to-words'; // Import the library
 
 const CsvGenerator = ({ formData }) => {
   const [isFormValid, setIsFormValid] = useState(true);
-  const [chunkSize, setChunkSize] = useState('full');
+  const [chunkSize, setChunkSize] = useState('full'); // Updated to single state for chunk size
   const {
     lowerLimit,
     upperLimit,
@@ -91,11 +91,11 @@ const CsvGenerator = ({ formData }) => {
     const totalRecords = parseInt(upperLimit) - parseInt(lowerLimit) + 1;
 
     if (chunkSize === 'full') {
-      return totalRecords;
+      return totalRecords; // All records in one file
     } else if (chunkSize === 'half') {
-      return Math.ceil(totalRecords / 2);
+      return Math.ceil(totalRecords / 2); // Half the total records
     } else if (chunkSize === 'quarter') {
-      return Math.ceil(totalRecords / 4);
+      return Math.ceil(totalRecords / 4); // Quarter of the total records
     }
     return totalRecords; // Default to full if something goes wrong
   };
@@ -148,7 +148,7 @@ const CsvGenerator = ({ formData }) => {
       }
 
       const csv = Papa.unparse(data);
-      downloadCsv(csv, `${DomainName}-${chunk + 1}.csv`);
+      downloadCsv(csv, `${DomainName}-${chunk + 1}.csv`); // Naming based on the chunk number
     }
   };
 
@@ -205,92 +205,7 @@ const CsvGenerator = ({ formData }) => {
       }
 
       const csv = Papa.unparse(data);
-      downloadCsv(csv, `${DomainName}-Device-${chunk + 1}.csv`);
-    }
-  };
-
-  const generateSubscriberCsvData = () => {
-    if (!isFormValid) return;
-
-    const lower = parseInt(lowerLimit);
-    const upper = parseInt(upperLimit);
-    const totalRecords = upper - lower + 1;
-
-    const chunkSize = getChunkSize();
-    const numChunks = Math.ceil(totalRecords / chunkSize);
-
-    for (let chunk = 0; chunk < numChunks; chunk++) {
-      const start = lower + chunk * chunkSize;
-      const end = Math.min(start + chunkSize - 1, upper);
-      const data = [];
-
-      for (let i = start; i <= end; i++) {
-        const { firstName, lastName } = getFirstAndLastName(i);
-
-        data.push({
-          directory_match: null,
-          aor_user: i,
-          aor_host: DomainName,
-          admin_vmail: 'yes',
-          accept: 'yes',
-          reject: 'yes',
-          do_not_disturb: 'yes',
-          screen: 'yes',
-          forward: 'yes',
-          fwd_not_reg: 'yes',
-          simultaneous_ring: 'yes',
-          forward_busy: 'yes',
-          forward_no_answer: 'yes',
-          fwd_on_active: 'yes',
-          no_answer_timeout: null,
-          subscriber_name: null,
-          firstname: firstName,
-          lastname: lastName,
-          subscriber_group: null,
-          site: null,
-          subscriber_login: `${i}@${DomainName}`,
-          subscriber_pin: null,
-          language: 'en_us',
-          data_limit: 0,
-          call_limit: 6,
-          time_zone: timezone,
-          directory_listing: "No",
-          directory_order: null,
-          greeting_index: null,
-          vmail: 'yes',
-          rcv_broadcast: 'yes',
-          rej_anony: 'no',
-          vmail_say_time: 'yes',
-          vmail_say_cid: 'no',
-          vmail_sort_lifo: 'yes',
-          vmail_fwd_to: null,
-          email_vmail: null,
-          email_vmail_enable: null,
-          email_address: "noreply@noreply.com",
-          ntfy_missed_call: 'no',
-          ntfy_data_limit: 'no',
-          dial_plan: DomainName,
-          dial_policy: dial,
-          callid_nmbr: `\t${calleridNumber}`,
-          callid_name: calleridName,
-          callid_emgr: `\t${callerid911}`,
-          area_code: areaCode,
-          privacy: 'no',
-          domain_dir: 'yes',
-          date_created: null,
-          srv_code: null,
-          scope: scope,
-          pwd_hash: null,
-          vmail_transcribe: "deepgram",
-          address_id: null,
-          hide_call_recordings: 'no',
-          rmoh: null,
-          moh_interval: 0,
-        });
-      }
-
-      const csv = Papa.unparse(data);
-      downloadCsv(csv, `${DomainName}-Subscriber-${chunk + 1}.csv`);
+      downloadCsv(csv, `${DomainName}-Device-${chunk + 1}.csv`); // Naming based on the chunk number
     }
   };
 
@@ -398,31 +313,6 @@ const CsvGenerator = ({ formData }) => {
             }}
           >
             Download for Device
-          </Button>
-        </Grid>
-        <Grid item xs={12}>
-          <Button 
-            variant="contained" 
-            color="default" 
-            onClick={generateSubscriberCsvData}
-            disabled={!isFormValid}
-            sx={{
-              width: '100%',
-              fontSize: '16px',
-              padding: '10px 20px',
-              backgroundColor: '#f0ad4e',
-              '&:hover': {
-                backgroundColor: 'white',
-                color: '#f0ad4e',
-                border: '1px solid #f0ad4e',
-              },
-              '&:disabled': {
-                backgroundColor: '#d3d3d3',
-                color: '#a0a0a0',
-              },
-            }}
-          >
-            Download for Subscriber
           </Button>
         </Grid>
       </Grid>

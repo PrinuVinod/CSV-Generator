@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
-import { Button, Box, Typography } from '@mui/material';
+import { Button, Box, Typography, FormControl, FormControlLabel, Checkbox, Grid, Paper } from '@mui/material';
 import { toWords } from 'number-to-words'; // Import the library
 
 const CsvGenerator = ({ formData }) => {
   const [isFormValid, setIsFormValid] = useState(true);
+  const [chunkSize, setChunkSize] = useState('full'); // Updated to single state for chunk size
   const {
     lowerLimit,
     upperLimit,
@@ -86,6 +87,19 @@ const CsvGenerator = ({ formData }) => {
     return { firstName, lastName: lastName || null };
   };
 
+  const getChunkSize = () => {
+    const totalRecords = parseInt(upperLimit) - parseInt(lowerLimit) + 1;
+
+    if (chunkSize === 'full') {
+      return totalRecords; // All records in one file
+    } else if (chunkSize === 'half') {
+      return Math.ceil(totalRecords / 2); // Half the total records
+    } else if (chunkSize === 'quarter') {
+      return Math.ceil(totalRecords / 4); // Quarter of the total records
+    }
+    return totalRecords; // Default to full if something goes wrong
+  };
+
   const generateCsvData = () => {
     if (!isFormValid) return;
 
@@ -93,8 +107,7 @@ const CsvGenerator = ({ formData }) => {
     const upper = parseInt(upperLimit);
     const totalRecords = upper - lower + 1;
 
-    // Set chunk size to 5000
-    const chunkSize = 5000;
+    const chunkSize = getChunkSize();
     const numChunks = Math.ceil(totalRecords / chunkSize);
 
     for (let chunk = 0; chunk < numChunks; chunk++) {
@@ -146,8 +159,7 @@ const CsvGenerator = ({ formData }) => {
     const upper = parseInt(upperLimit);
     const totalRecords = upper - lower + 1;
 
-    // Set chunk size to 5000
-    const chunkSize = 5000;
+    const chunkSize = getChunkSize();
     const numChunks = Math.ceil(totalRecords / chunkSize);
 
     for (let chunk = 0; chunk < numChunks; chunk++) {
@@ -206,59 +218,105 @@ const CsvGenerator = ({ formData }) => {
   };
 
   return (
-    <Box sx={{ textAlign: 'center', mt: 4 }}>
-      {!isFormValid && (
-        <Typography color="error" sx={{ mb: 2 }}>
-          Please fill in all required fields to download the CSV file.
+    <Paper elevation={3} sx={{ padding: 4, maxWidth: 600, mx: 'auto', borderRadius: 2 }}>
+      <Box sx={{ textAlign: 'center', mb: 4 }}>
+        <Typography variant="h5" gutterBottom>
+          CSV Download Options
         </Typography>
-      )}
-      <Button 
-        variant="contained" 
-        color="primary" 
-        onClick={generateCsvData}
-        disabled={!isFormValid}
-        sx={{
-          fontSize: '16px',
-          padding: '10px 20px',
-          backgroundColor: '#0c6934',
-          '&:hover': {
-            backgroundColor: 'white',
-            color: '#0c6934',
-            border: '1px solid #0c6934',
-          },
-          '&:disabled': {
-            backgroundColor: '#d3d3d3',
-            color: '#a0a0a0',
-          },
-        }}
-      >
-        Download for User
-      </Button>
-
-      <Button 
-        variant="contained" 
-        color="secondary" 
-        onClick={generateSecondaryCsvData}
-        disabled={!isFormValid}
-        sx={{
-          fontSize: '16px',
-          padding: '10px 20px',
-          marginLeft: '20px',
-          backgroundColor: '#8c2eeb',
-          '&:hover': {
-            backgroundColor: 'white',
-            color: '#69340c',
-            border: '1px solid #8c2eeb',
-          },
-          '&:disabled': {
-            backgroundColor: '#d3d3d3', 
-            color: '#a0a0a0',
-          },
-        }}
-      >
-        Download for Device
-      </Button>
-    </Box>
+        {!isFormValid && (
+          <Typography color="error" sx={{ mb: 2 }}>
+            Please fill in all required fields to download the CSV file.
+          </Typography>
+        )}
+      </Box>
+      <Typography variant="h6" gutterBottom>
+        Select Chunk Size:
+      </Typography>
+      <FormControl component="fieldset" sx={{ mb: 4 }}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={chunkSize === 'full'}
+              onChange={() => setChunkSize('full')}
+              color="primary"
+            />
+          }
+          label="Full"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={chunkSize === 'half'}
+              onChange={() => setChunkSize('half')}
+              color="primary"
+            />
+          }
+          label="Half"
+        />
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={chunkSize === 'quarter'}
+              onChange={() => setChunkSize('quarter')}
+              color="primary"
+            />
+          }
+          label="Quarter"
+        />
+      </FormControl>
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            onClick={generateCsvData}
+            disabled={!isFormValid}
+            sx={{
+              width: '100%',
+              fontSize: '16px',
+              padding: '10px 20px',
+              backgroundColor: '#0c6934',
+              '&:hover': {
+                backgroundColor: 'white',
+                color: '#0c6934',
+                border: '1px solid #0c6934',
+              },
+              '&:disabled': {
+                backgroundColor: '#d3d3d3',
+                color: '#a0a0a0',
+              },
+            }}
+          >
+            Download for User
+          </Button>
+        </Grid>
+        <Grid item xs={12}>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            onClick={generateSecondaryCsvData}
+            disabled={!isFormValid}
+            sx={{
+              width: '100%',
+              fontSize: '16px',
+              padding: '10px 20px',
+              backgroundColor: '#8c2eeb',
+              '&:hover': {
+                backgroundColor: 'white',
+                color: '#69340c',
+                border: '1px solid #8c2eeb',
+              },
+              '&:disabled': {
+                backgroundColor: '#d3d3d3', 
+                color: '#a0a0a0',
+              },
+            }}
+          >
+            Download for Device
+          </Button>
+        </Grid>
+      </Grid>
+    </Paper>
   );
 };
 
